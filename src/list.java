@@ -1,0 +1,6 @@
+/**
+ * list
+ */
+public record list() {
+
+}
