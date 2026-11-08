@@ -1,6 +1,0 @@
-/**
- * list
- */
-public record list() {
-
-}

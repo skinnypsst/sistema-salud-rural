@@ -16,16 +16,18 @@ public abstract class Cita {
     }
 
     //Metodos Getters
+    public String getTipo(){ return tipo; }
     public String getEstado() { return estado; }
     public Paciente getPaciente() { return paciente; }
     public Medico getMedico() { return medico; }
-    public void getResumenSeguro(){
+    public abstract void getResumenSeguro();
 
+    //Metodos Setters
+    public void setEstado(String nuevoEstado){
+        this.estado = nuevoEstado;
     }
 
-    //Editar el tipo de retorno al añadir la logica
-    public void registrarAtencion(String diagnostico, String tratamiento){
+    public void registrarAtencion(String diagnostico, String tratamiento){} 
 
-    }   
 }
 

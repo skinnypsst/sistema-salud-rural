@@ -1,4 +1,6 @@
-public abstract class CitaFactory {
+public class CitaFactory {
+    CitaFactory(){ }
+    
     public Cita crearCita(String id, String tipo, String estado, Paciente paciente, Medico medico, AtencionMedica atencionMedica){
         switch (tipo.toLowerCase().trim()) {
             case "emergencia":  
@@ -10,6 +12,5 @@ public abstract class CitaFactory {
             default:
                 throw new IllegalArgumentException("Tipo de cita no válido: " + tipo);
         }
-    }
-    
+    }   
 }
