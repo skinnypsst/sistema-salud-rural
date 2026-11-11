@@ -1,6 +1,6 @@
-public class Persona {
-    private String dni;
-    private String nombreCompleto;
+public abstract class Persona {
+    protected String dni;
+    protected String nombreCompleto;
 
     Persona(String dni, String nombreCompleto){
         this.dni = dni;
@@ -12,12 +12,9 @@ public class Persona {
     public String getNombreCompleto() { return nombreCompleto; }
 
     //Editar el tipo de retorno al añadir la logica
-    public void DniEnmascarado(){
+    public void DniEnmascarado(){}
 
-    }
+    //Se debe reeescribir en las clases hijas.
+    public abstract String obtenerRol();
 
-    //Editar el tipo de retorno al añadir la logica
-    public void obtenerRol(){
-
-    } 
 }

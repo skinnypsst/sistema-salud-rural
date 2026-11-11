@@ -1,17 +1,17 @@
 public class Paciente extends Persona{
     private String nHistoriaClinica;
-    Paciente(String dni, String nombreCompleto, String nHistoriaClinica){
+    Paciente(String dni, String nombreCompleto){
         super(dni, nombreCompleto);
-        this.nHistoriaClinica = nHistoriaClinica;
+        this.nHistoriaClinica = "H.C. N° " + getDni();
     }
 
     //Metodos Getters
     public String getnHistoriaClinica(){ return nHistoriaClinica; }
+    public Paciente getPaciente(){ return this; }
 
     @Override
-    //Editar el tipo de retorno al añadir la logica
-    public void obtenerRol() {
-        super.obtenerRol();
+    public String obtenerRol() {
+        return "Paciente";
     }
 
     

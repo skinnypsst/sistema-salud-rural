@@ -9,12 +9,9 @@ public class Medico extends Persona {
     public String getEspecialidad(){ return especialidad; }
 
     @Override
-    //Editar el tipo de retorno al añadir la logica
-    public void obtenerRol() {
-         super.obtenerRol();
+    public String obtenerRol() {
+         return "Médico";
     } 
-
-
 }
 
     
