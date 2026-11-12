@@ -39,7 +39,7 @@ def main():
     print("=" * 85)
     for resumen in gestor.obtenerResumenAnonimizado():
         print(resumen)
-        print("-" * 85)  # Línea separadora entre cada cita
+        print("-" * 85)  
 
     # 7. Vista clínica autorizada (Exclusiva para médicos)
     print(" " + "=" * 85)
@@ -54,7 +54,6 @@ def main():
     except PermissionError as e:
         print(f"[Bloqueo de Seguridad Ley 29733]: {e}")
 
-    # 8. Estadísticas generales al final
     print(" " + "=" * 85)
     print("                 ESTADÍSTICAS DEL CENTRO DE SALUD")
     print("=" * 85)
