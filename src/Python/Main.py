@@ -47,7 +47,7 @@ def main():
     print("=" * 85)
     try:
         print(cita1.verFichaClinicaMedica(med_general))
-        print()  # Espacio en blanco entre fichas
+        print()  
         print(cita2.verFichaClinicaMedica(med_urgencias))
         print()
         print(cita1.verFichaClinicaMedica(pac1))
