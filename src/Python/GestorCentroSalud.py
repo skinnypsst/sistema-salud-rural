@@ -1,4 +1,5 @@
 from typing import List
+from functools import reduce
 from Paciente import Paciente
 from Cita import Cita
 
@@ -24,12 +25,16 @@ class GestorCentroSalud:
         self.__citas.append(c)
 
     def obtenerCitasPorEstado(self, estado: str) -> List[Cita]:
-        return [c for c in self.__citas if c.getEstado().upper() == estado.upper()]
-
+        return list(filter(lambda c: c.getEstado().upper() == estado.upper(), self.__citas))
+    
     def obtenerResumenAnonimizado(self) -> List[str]:
-        return [c.getResumenSeguro() for c in self.__citas]
+        return list(map(lambda c: c.getResumenSeguro(), self.__citas))
 
     def contarTotalAtendidas(self) -> int:
-        return len(self.obtenerCitasPorEstado("ATENDIDA"))
+        return reduce(
+            lambda acc, c: acc + (1 if c.getEstado().upper() == "ATENDIDA" else 0),
+            self.__citas,
+            0
+        )
 
     

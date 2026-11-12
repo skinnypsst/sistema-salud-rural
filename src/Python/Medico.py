@@ -10,3 +10,8 @@ class Medico(Persona):
 
     def obtenerRol(self) -> str:
         return "Médico"
+
+    def atenderCita(self, cita, diagnostico: str, tratamiento: str) -> None:
+        if cita.getMedico() != self:
+            raise PermissionError(f"El médico {self.getNombreCompleto()} no está asignado a esta cita.")
+        cita.registrarAtencion(diagnostico, tratamiento)

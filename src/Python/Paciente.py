@@ -5,5 +5,8 @@ class Paciente(Persona):
         super().__init__(dni, nombreCompleto)
         self.__nroHistoriaClinica = nroHistoriaClinica
 
+    def getNroHistoriaClinica(self) -> str:
+        return self.__nroHistoriaClinica
+
     def obtenerRol(self) -> str:
         return "Paciente"

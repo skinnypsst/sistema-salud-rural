@@ -29,21 +29,38 @@ def main():
     gestor.agendarCita(cita2)
     gestor.agendarCita(cita3)
 
-    # 5. Registro de Atención Médica (Composición) en dos de las citas
-    cita1.registrarAtencion("Faringitis aguda", "Paracetamol 500mg cada 8h")
-    cita2.registrarAtencion("Cuadro de deshidratación severa", "Rehidratación intravenosa inmediata")
+    # 5. El Médico realiza la Atención Médica sobre la Cita
+    med_general.atenderCita(cita1, "Faringitis aguda", "Paracetamol 500mg cada 8h")
+    med_urgencias.atenderCita(cita2, "Cuadro de deshidratación severa", "Rehidratación intravenosa inmediata")
 
-    # 6. Reporte por consola
-    print("=== REPORTE ANONIMIZADO DEL CENTRO DE SALUD ===")
+   # 6. Reporte Anonimizado por consola
+    print(" " + "=" * 85)
+    print("                REPORTE ANONIMIZADO DEL CENTRO DE SALUD")
+    print("=" * 85)
     for resumen in gestor.obtenerResumenAnonimizado():
         print(resumen)
+        print("-" * 85)  # Línea separadora entre cada cita
 
-    print("\n=== ESTADÍSTICAS ===")
-    print(f"Citas Atendidas  : {gestor.contarTotalAtendidas()}")
-    print(f"Citas Programadas: {len(gestor.obtenerCitasPorEstado('PROGRAMADA'))}")
+    # 7. Vista clínica autorizada (Exclusiva para médicos)
+    print(" " + "=" * 85)
+    print("          VISTA CLÍNICA AUTORIZADA (EXCLUSIVA PARA MÉDICOS)")
+    print("=" * 85)
+    try:
+        print(cita1.verFichaClinicaMedica(med_general))
+        print()  # Espacio en blanco entre fichas
+        print(cita2.verFichaClinicaMedica(med_urgencias))
+        print()
+        print(cita1.verFichaClinicaMedica(pac1))
+    except PermissionError as e:
+        print(f"[Bloqueo de Seguridad Ley 29733]: {e}")
+
+    # 8. Estadísticas generales al final
+    print(" " + "=" * 85)
+    print("                 ESTADÍSTICAS DEL CENTRO DE SALUD")
+    print("=" * 85)
+    print(f"  • Citas Atendidas  : {gestor.contarTotalAtendidas()}")
+    print(f"  • Citas Programadas: {len(gestor.obtenerCitasPorEstado('PROGRAMADA'))}")
+    print("=" * 85 + " ")
 
 if __name__ == "__main__":
     main()
-
-
-    

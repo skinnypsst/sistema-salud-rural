@@ -8,5 +8,4 @@ class CitaEmergencia(Cita):
 
     def obtenerPrioridad(self) -> str:
         return "Prioridad Alta - Atención Inmediata"
-    def getResumenSeguro(self) -> str:
-            return f"Cita Emergencia [{self._idCita}] - Paciente: {self._paciente.getDniEnmascarado()} | Médico: {self._medico.getNombreCompleto()} | Estado: {self._estado}"
+   

@@ -9,5 +9,4 @@ class CitaAmbulatoria(Cita):
     def obtenerPrioridad(self) -> str:
         return "Prioridad Media - Consulta Externa"
 
-    def getResumenSeguro(self) -> str:
-        return f"Cita Ambulatoria [{self._idCita}] - Paciente: {self._paciente.getDniEnmascarado()} | Médico: {self._medico.getNombreCompleto()} | Estado: {self._estado}"
+   
