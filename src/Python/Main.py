@@ -8,18 +8,18 @@ def main():
     gestor = GestorCentroSalud.getInstancia()
 
     # 2. Registro de Médicos y Pacientes
-    med_general = Medico("40112233", "Dr. Alberto Ríos", "Medicina General")
-    med_urgencias = Medico("45667788", "Dra. Lucía Paredes", "Emergencias")
+    med_general = Medico("40112233", "Dr. Alberto Rios Mendoza", "Medicina General")
+    med_urgencias = Medico("45667788", "Dra. Lucía Paredes Prieto", "Emergencias")
 
-    pac1 = Paciente("71234567", "Luis Torres", "HC-001")
-    pac2 = Paciente("76543210", "Ana Vargas", "HC-002")
-    pac3 = Paciente("48991122", "Pedro Quispe", "HC-003")
+    pac1 = Paciente("71234567", "Luis Torres Garcia", "HC-001")
+    pac2 = Paciente("76543210", "Ana Vargas Desposorio", "HC-002")
+    pac3 = Paciente("48991122", "Pedro Quispe Vasquez", "HC-003")
 
     gestor.registrarPaciente(pac1)
     gestor.registrarPaciente(pac2)
     gestor.registrarPaciente(pac3)
 
-    # 3. Creación de los 3 tipos de citas mediante CitaFactory
+    # 3. Creación de 3 tipos de citas mediante CitaFactory
     cita1 = CitaFactory.crearCita("C-101", "AMBULATORIA", pac1, med_general)
     cita2 = CitaFactory.crearCita("C-102", "EMERGENCIA", pac2, med_urgencias)
     cita3 = CitaFactory.crearCita("C-103", "PREVENTIVA", pac3, med_general)

@@ -1,10 +1,8 @@
 from Paciente import Paciente
 from Medico import Medico
-from Cita import Cita
-from CitaAmbulatoria import CitaAmbulatoria
-from CitaEmergencia import CitaEmergencia
-from CitaPreventiva import CitaPreventiva
+from Cita import Cita, CitaAmbulatoria, CitaEmergencia, CitaPreventiva
 
+# PATRÓN DE DISEÑO FACTORY METHOD: Centraliza y desacopla la creación polimórfica de objetos Cita
 class CitaFactory:
     @staticmethod
     def crearCita(id: str, tipo: str, p: Paciente, m: Medico) -> Cita:

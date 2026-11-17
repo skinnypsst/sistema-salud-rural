@@ -1,6 +1,9 @@
+package Java;
 public class Medico extends Persona {
     private String especialidad;
-    Medico(String dni, String nombreCompleto, String especialidad){
+
+    // Constructor
+    public Medico(String dni, String nombreCompleto, String especialidad) {
         super(dni, nombreCompleto);
         this.especialidad = especialidad;
     }
@@ -10,7 +13,7 @@ public class Medico extends Persona {
 
     @Override
     public String obtenerRol() {
-         return "Médico";
+         return "Médico Especialista en " + especialidad;
     } 
 }
 
