@@ -1,26 +1,25 @@
-# Abstracción y clase base
 from abc import ABC, abstractmethod
+import re
 
+# Clase Abstracta y Encapsulamiento
 class Persona(ABC):
+    # Constructor
     def __init__(self, dni: str, nombreCompleto: str):
-        # ENCAPSULAMIENTO: Atributos privados (__)
+        if dni is None or not re.match(r"^\d{8}$", dni):
+            raise ValueError("El DNI debe contener exactamente 8 digitos numéricos.")
         self.__dni = dni
         self.__nombreCompleto = nombreCompleto
 
-    # LEY N.° 29733 - PROTECCIÓN DE DATOS PERSONALES: DNI -> enmascaramiento
+    # Metodos Getters
     def getDniEnmascarado(self) -> str:
-            if len(self.__dni) > 3:
-                return "*" * (len(self.__dni) - 3) + self.__dni[-3:]
-            return "***"
+        return "****" + self.__dni[4:]
 
-    # MÉTODOS GETTERS
     def getDni(self) -> str:
         return self.__dni
 
     def getNombreCompleto(self) -> str:
         return self.__nombreCompleto
-    
-    # POLIMORFISMO: Método abstracto que obliga a las subclases a definir su propio comportamiento
+
     @abstractmethod
     def obtenerRol(self) -> str:
         pass

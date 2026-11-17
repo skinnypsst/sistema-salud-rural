@@ -1,22 +1,17 @@
 from typing import List
 from functools import reduce
 from Paciente import Paciente
-from Cita import Cita
+from CitaMedica import CitaMedica
 
-# PATRÓN DE DISEÑO SINGLETON: Garantiza una única instancia centralizada del gestor en todo el sistema.
 class GestorCentroSalud:
-    # RELACIÓN REFLEXIVA: La clase mantiene una referencia estática privada a sí misma.
     __instancia = None
 
     def __init__(self):
         if GestorCentroSalud.__instancia is not None:
             raise Exception("Esta clase es un Singleton. Use getInstancia().")
-        
-        # RELACIÓN AGREGACIÓN (1 a 0..*): El gestor agrupa colecciones de Pacientes y Citas que pueden existir independientemente.
         self.__pacientes: List[Paciente] = []
-        self.__citas: List[Cita] = []
+        self.__citas: List[CitaMedica] = []
 
-    # ACCESO GLOBAL SINGLETON: Método de clase que controla la creación y retorno de la instancia única.
     @classmethod
     def getInstancia(cls) -> 'GestorCentroSalud':
         if cls.__instancia is None:
@@ -26,22 +21,19 @@ class GestorCentroSalud:
     def registrarPaciente(self, p: Paciente) -> None:
         self.__pacientes.append(p)
 
-    def agendarCita(self, c: Cita) -> None:
+    def agendarCita(self, c: CitaMedica) -> None:
         self.__citas.append(c)
 
-    # FILTER + LAMBDA): Filtra la colección de citas de forma declarativa sin bucles for
-    def obtenerCitasPorEstado(self, estado: str) -> List[Cita]:
+    # Tema 4: filter + lambda
+    def obtenerCitasPorEstado(self, estado: str) -> List[CitaMedica]:
         return list(filter(lambda c: c.getEstado().upper() == estado.upper(), self.__citas))
-    
+
+    # Tema 4: map + lambda
     def obtenerResumenAnonimizado(self) -> List[str]:
         return list(map(lambda c: c.getResumenSeguro(), self.__citas))
 
-    # REDUCE + LAMBDA): Acumula y reduce la lista de citas atendidas a un único entero total
+    # Tema 4: filter + map + reduce + lambda
     def contarTotalAtendidas(self) -> int:
-        return reduce(
-            lambda acc, c: acc + (1 if c.getEstado().upper() == "ATENDIDA" else 0),
-            self.__citas,
-            0
-        )
-
-    
+        citas_atendidas = filter(lambda c: c.getEstado().upper() == "ATENDIDA", self.__citas)
+        valores = map(lambda c: 1, citas_atendidas)
+        return reduce(lambda acumulado, valor: acumulado + valor, valores, 0)

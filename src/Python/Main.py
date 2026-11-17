@@ -1,65 +1,45 @@
+import sys
 from Paciente import Paciente
 from Medico import Medico
+from CitaMedica import CitaMedica
 from CitaFactory import CitaFactory
 from GestorCentroSalud import GestorCentroSalud
 
 def main():
-    # 1. Instacia única de GestorCentroSalud (Singleton)
-    gestor = GestorCentroSalud.getInstancia()
-
-    # 2. Registro de Médicos y Pacientes
-    med_general = Medico("40112233", "Dr. Alberto Rios Mendoza", "Medicina General")
-    med_urgencias = Medico("45667788", "Dra. Lucía Paredes Prieto", "Emergencias")
-
-    pac1 = Paciente("71234567", "Luis Torres Garcia", "HC-001")
-    pac2 = Paciente("76543210", "Ana Vargas Desposorio", "HC-002")
-    pac3 = Paciente("48991122", "Pedro Quispe Vasquez", "HC-003")
-
-    gestor.registrarPaciente(pac1)
-    gestor.registrarPaciente(pac2)
-    gestor.registrarPaciente(pac3)
-
-    # 3. Creación de 3 tipos de citas mediante CitaFactory
-    cita1 = CitaFactory.crearCita("C-101", "AMBULATORIA", pac1, med_general)
-    cita2 = CitaFactory.crearCita("C-102", "EMERGENCIA", pac2, med_urgencias)
-    cita3 = CitaFactory.crearCita("C-103", "PREVENTIVA", pac3, med_general)
-
-    # 4. Agendamiento en el Gestor
-    gestor.agendarCita(cita1)
-    gestor.agendarCita(cita2)
-    gestor.agendarCita(cita3)
-
-    # 5. El Médico realiza la Atención Médica sobre la Cita
-    med_general.atenderCita(cita1, "Faringitis aguda", "Paracetamol 500mg cada 8h")
-    med_urgencias.atenderCita(cita2, "Cuadro de deshidratación severa", "Rehidratación intravenosa inmediata")
-
-   # 6. Reporte Anonimizado por consola
-    print(" " + "=" * 85)
-    print("                REPORTE ANONIMIZADO DEL CENTRO DE SALUD")
-    print("=" * 85)
-    for resumen in gestor.obtenerResumenAnonimizado():
-        print(resumen)
-        print("-" * 85)  
-
-    # 7. Vista clínica autorizada (Exclusiva para médicos)
-    print(" " + "=" * 85)
-    print("          VISTA CLÍNICA AUTORIZADA (EXCLUSIVA PARA MÉDICOS)")
-    print("=" * 85)
     try:
-        print(cita1.verFichaClinicaMedica(med_general))
-        print()  
-        print(cita2.verFichaClinicaMedica(med_urgencias))
-        print()
-        print(cita1.verFichaClinicaMedica(pac1))
-    except PermissionError as e:
-        print(f"[Bloqueo de Seguridad Ley 29733]: {e}")
+        gestor = GestorCentroSalud.getInstancia()
 
-    print(" " + "=" * 85)
-    print("                 ESTADÍSTICAS DEL CENTRO DE SALUD")
-    print("=" * 85)
-    print(f"  • Citas Atendidas  : {gestor.contarTotalAtendidas()}")
-    print(f"  • Citas Programadas: {len(gestor.obtenerCitasPorEstado('PROGRAMADA'))}")
-    print("=" * 85 + " ")
+        p1 = Paciente("72849102", "Luis Gutierrez Rodriguez", "HC-001")
+        p2 = Paciente("41928374", "María Mendoza Tirado", "HC-002")
+        m1 = Medico("10293847", "Dr. Jorge Salazar Castillo", "Medicina General")
+
+        gestor.registrarPaciente(p1)
+        gestor.registrarPaciente(p2)
+
+        c1 = CitaFactory.crearCita("C-101", "Consulta Externa", p1, m1)
+        c2 = CitaFactory.crearCita("C-102", "Control", p2, m1)
+
+        gestor.agendarCita(c1)
+        gestor.agendarCita(c2)
+
+        c1.registrarAtencion("Faringitis aguda", "Paracetamol 500mg cada 8h")
+
+        print("ROLES (POLIMORFISMO): ")
+        print(p1.getNombreCompleto() + " -> " + p1.obtenerRol())
+        print(m1.getNombreCompleto() + " -> " + m1.obtenerRol())
+        print("----------------------------------------")
+
+        print("REPORTE ANONIMIZADO (MAP): ")
+        for resumen in gestor.obtenerResumenAnonimizado():
+            print(resumen)
+        print("----------------------------------------")
+        print("CITAS PENDIENTES (FILTER):")
+        print("Pendientes: " + str(len(gestor.obtenerCitasPorEstado("PENDIENTE"))))
+        print("----------------------------------------")
+        print("TOTAL ATENDIDAS (REDUCE): ")
+        print("Atendidas: " + str(gestor.contarTotalAtendidas()))
+    except ValueError as e:
+        print("Error de validación: " + str(e), file=sys.stderr)
 
 if __name__ == "__main__":
     main()
