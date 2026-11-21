@@ -15,10 +15,10 @@ public class Paciente extends Persona {
     }
 
     public void setNroHistoriaClinica(String nroHistoriaClinica) {
-        if (nroHistoriaClinica == null || nroHistoriaClinica.trim().isEmpty()) {
+        if (nroHistoriaClinica == null || nroHistoriaClinica.length() == 0) {
             throw new IllegalArgumentException("El número de historia clínica es obligatorio.");
         }
-        this.nroHistoriaClinica = nroHistoriaClinica.trim();
+        this.nroHistoriaClinica = nroHistoriaClinica;
     }
 
     @Override

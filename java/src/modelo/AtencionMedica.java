@@ -17,7 +17,7 @@ public class AtencionMedica {
     }
 
     public void setDiagnostico(String diagnostico) {
-        if (diagnostico == null || diagnostico.trim().isEmpty()) {
+        if (diagnostico == null || diagnostico.length() == 0) {
             throw new IllegalArgumentException("El diagnóstico no puede estar vacío.");
         }
         this.diagnosticoCifrado = Base64.getEncoder().encodeToString(diagnostico.trim().getBytes());
@@ -28,9 +28,9 @@ public class AtencionMedica {
     }
 
     public void setTratamiento(String tratamiento) {
-        if (tratamiento == null || tratamiento.trim().isEmpty()) {
+        if (tratamiento == null || tratamiento.length() == 0) {
             throw new IllegalArgumentException("El tratamiento no puede estar vacío.");
         }
-        this.tratamiento = tratamiento.trim();
+        this.tratamiento = tratamiento;
     }
 }

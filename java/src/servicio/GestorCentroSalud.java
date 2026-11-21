@@ -77,21 +77,21 @@ public class GestorCentroSalud {
         return List.copyOf(personas); // Colección inmutable: impide modificar la lista desde fuera
     }
 
-    // Tema 4: filter + lambda (devuelve lista inmutable con .toList())
+    // filter + lambda (devuelve lista inmutable con .toList())
     public List<CitaMedica> obtenerCitasPorEstado(String estado) {
         return citas.stream()
                     .filter(c -> c.getEstado().equalsIgnoreCase(estado))
                     .toList();
     }
 
-    // Tema 4: map + lambda
+    // map + lambda
     public List<String> obtenerResumenAnonimizado() {
         return citas.stream()
                     .map(c -> c.getResumenSeguro())
                     .toList();
     }
 
-    // Tema 4: filter + map + reduce + lambda
+    // filter + map + reduce + lambda
     public int contarTotalAtendidas() {
         return citas.stream()
                     .filter(c -> c.getEstado().equalsIgnoreCase("ATENDIDA"))

@@ -33,10 +33,10 @@ public abstract class Persona {
     }
 
     public void setNombreCompleto(String nombreCompleto) {
-        if (nombreCompleto == null || nombreCompleto.trim().isEmpty()) {
+        if (nombreCompleto == null || nombreCompleto.length() == 0) {
             throw new IllegalArgumentException("El nombre completo no puede estar vacío.");
         }
-        this.nombreCompleto = nombreCompleto.trim();
+        this.nombreCompleto = nombreCompleto;
     }
 
     public abstract String obtenerRol();

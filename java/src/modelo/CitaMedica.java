@@ -34,10 +34,10 @@ public class CitaMedica {
     }
 
     public void setIdCita(String idCita) {
-        if (idCita == null || idCita.trim().isEmpty()) {
+        if (idCita == null || idCita.length()==0) {
             throw new IllegalArgumentException("El ID de la cita es obligatorio.");
         }
-        this.idCita = idCita.trim();
+        this.idCita = idCita;
     }
 
     public String getTipoCita() {
@@ -45,10 +45,10 @@ public class CitaMedica {
     }
 
     public void setTipoCita(String tipoCita) {
-        if (tipoCita == null || tipoCita.trim().isEmpty()) {
+        if (tipoCita == null || tipoCita.length()==0) {
             throw new IllegalArgumentException("El tipo de cita es obligatorio.");
         }
-        this.tipoCita = tipoCita.trim();
+        this.tipoCita = tipoCita;
     }
 
     public String getEstado() {

@@ -15,10 +15,10 @@ public class Medico extends Persona {
     }
 
     public void setEspecialidad(String especialidad) {
-        if (especialidad == null || especialidad.trim().isEmpty()) {
+        if (especialidad == null || especialidad.isEmpty()) {
             throw new IllegalArgumentException("La especialidad del médico es obligatoria.");
         }
-        this.especialidad = especialidad.trim();
+        this.especialidad = especialidad;
     }
 
     @Override
