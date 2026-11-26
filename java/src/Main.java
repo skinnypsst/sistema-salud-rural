@@ -7,7 +7,6 @@ import servicio.*;
 public class Main {
 
     private static final Scanner scanner = new Scanner(System.in);
-    
     private static final GestorCentroSalud gestor = GestorCentroSalud.getInstancia();
 
     public static void main(String[] args) {
@@ -72,7 +71,7 @@ public class Main {
             gestor.agendarCita(c2);
 
             c1.registrarAtencion("Faringitis aguda", "Paracetamol 500mg cada 8h");
-        } catch (DniInvalidoException | IllegalArgumentException e) {
+        } catch (DniInvalidoException | IllegalArgumentException | IllegalStateException e) {
             System.err.println("Error en datos iniciales: " + e.getMessage());
         }
     }
@@ -85,8 +84,11 @@ public class Main {
                 if (!dni.matches("\\d{8}")) {
                     throw new DniInvalidoException("El DNI debe contener exactamente 8 dígitos numéricos.");
                 }
+                if (gestor.buscarPacientePorDni(dni) != null) {
+                    throw new IllegalArgumentException("Ya existe un paciente registrado con ese DNI.");
+                }
                 break;
-            } catch (DniInvalidoException e) {
+            } catch (DniInvalidoException | IllegalArgumentException e) {
                 System.out.println("[ERROR] " + e.getMessage());
             }
         }
@@ -138,6 +140,9 @@ public class Main {
                 id = leer("ID de cita (ej. C-103): ");
                 if (!id.matches("C-\\d{3}")) {
                     throw new IllegalArgumentException("El formato del ID de la cita debe ser C-XXX (ej. C-103).");
+                }
+                if (gestor.buscarCitaPorId(id) != null) {
+                    throw new IllegalArgumentException("Ya existe una cita agendada con el ID " + id + ".");
                 }
                 break;
             } catch (IllegalArgumentException e) {
@@ -207,10 +212,15 @@ public class Main {
         while (true) {
             String id = leer("ID de la cita (ej. C-102): ");
             cita = gestor.buscarCitaPorId(id);
-            if (cita != null) {
-                break;
+            if (cita == null) {
+                System.out.println("[ERROR] Cita no encontrada. Intente nuevamente.");
+                continue;
             }
-            System.out.println("[ERROR] Cita no encontrada. Intente nuevamente.");
+            if ("ATENDIDA".equals(cita.getEstado())) {
+                System.out.println("[ERROR] La cita " + cita.getIdCita() + " ya fue atendida previamente.");
+                return;
+            }
+            break;
         }
 
         String diag;
@@ -231,7 +241,7 @@ public class Main {
                 try {
                     cita.registrarAtencion(diag, leer("Tratamiento: "));
                     break;
-                } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException | IllegalStateException e) {
                     System.out.println("[ERROR] " + e.getMessage());
                 }
             }
@@ -249,8 +259,11 @@ public class Main {
                 if (!dni.matches("\\d{8}")) {
                     throw new DniInvalidoException("El DNI debe contener exactamente 8 dígitos numéricos.");
                 }
+                if (gestor.buscarMedicoPorDni(dni) != null) {
+                    throw new IllegalArgumentException("Ya existe un médico registrado con ese DNI.");
+                }
                 break;
-            } catch (DniInvalidoException e) {
+            } catch (DniInvalidoException | IllegalArgumentException e) {
                 System.out.println("[ERROR] " + e.getMessage());
             }
         }

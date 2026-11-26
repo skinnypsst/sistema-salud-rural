@@ -18,6 +18,9 @@ public class CitaMedica {
     }
 
     public void registrarAtencion(String diagnostico, String tratamiento) {
+        if ("ATENDIDA".equals(this.estado)) {
+            throw new IllegalStateException("La cita " + idCita + " ya fue atendida previamente.");
+        }
         this.atencion = new AtencionMedica(diagnostico, tratamiento);
         this.estado = "ATENDIDA";
     }
@@ -30,7 +33,7 @@ public class CitaMedica {
         return idCita;
     }
 
-   public void setIdCita(String idCita) {
+    public void setIdCita(String idCita) {
         if (idCita == null || !idCita.matches("C-\\d{3}")) {
             throw new IllegalArgumentException("El formato del ID de la cita debe ser C-XXX (ej. C-103).");
         }
@@ -42,10 +45,10 @@ public class CitaMedica {
     }
 
     public void setTipoCita(String tipoCita) {
-        if (tipoCita == null || tipoCita.length()==0) {
+        if (tipoCita == null || tipoCita.isBlank()) {
             throw new IllegalArgumentException("El tipo de cita es obligatorio.");
         }
-        this.tipoCita = tipoCita;
+        this.tipoCita = tipoCita.trim();
     }
 
     public String getEstado() {

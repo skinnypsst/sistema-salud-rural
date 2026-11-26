@@ -34,7 +34,7 @@ public abstract class Persona {
     }
 
     public void setNombres(String nombres) {
-        if (nombres == null || nombres.length() == 0) {
+        if (nombres == null || nombres.isBlank()) {
             throw new IllegalArgumentException("Los nombres no pueden estar vacíos.");
         }
         this.nombres = nombres;
@@ -45,7 +45,7 @@ public abstract class Persona {
     }
 
     public void setApellidos(String apellidos) {
-        if (apellidos == null || apellidos.length() == 0) {
+        if (apellidos == null || apellidos.isBlank()) {
             throw new IllegalArgumentException("Los apellidos no pueden estar vacíos.");
         }
         this.apellidos = apellidos;

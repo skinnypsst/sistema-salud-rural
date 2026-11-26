@@ -27,7 +27,7 @@ public class AtencionMedica {
     }
 
     public void setTratamiento(String tratamiento) {
-        if (tratamiento == null || tratamiento.length() == 0) {
+        if (tratamiento == null || tratamiento.isBlank()) {
             throw new IllegalArgumentException("El tratamiento no puede estar vacío.");
         }
         this.tratamiento = tratamiento;
