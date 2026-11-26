@@ -2,7 +2,6 @@ package modelo;
 
 import java.util.Base64;
 
-// Composición y protección de datos clínicos (Ley N.° 29733)
 public class AtencionMedica {
     private String diagnosticoCifrado;
     private String tratamiento;
@@ -17,7 +16,7 @@ public class AtencionMedica {
     }
 
     public void setDiagnostico(String diagnostico) {
-        if (diagnostico == null || diagnostico.length() == 0) {
+        if (diagnostico == null || diagnostico.isEmpty()) {
             throw new IllegalArgumentException("El diagnóstico no puede estar vacío.");
         }
         this.diagnosticoCifrado = Base64.getEncoder().encodeToString(diagnostico.trim().getBytes());

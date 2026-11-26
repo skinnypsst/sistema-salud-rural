@@ -5,8 +5,8 @@ import excepciones.DniInvalidoException;
 public class Medico extends Persona {
     private String especialidad;
 
-    public Medico(String dni, String nombreCompleto, String especialidad) throws DniInvalidoException {
-        super(dni, nombreCompleto);
+    public Medico(String dni, String nombres, String apellidos, String especialidad) throws DniInvalidoException {
+        super(dni, nombres, apellidos);
         setEspecialidad(especialidad);
     }
 

@@ -1,6 +1,5 @@
 package modelo;
 
-// Asociación (Paciente y Medico) y Composición (crea y posee su AtencionMedica)
 public class CitaMedica {
     private String idCita;
     private String tipoCita;
@@ -18,13 +17,11 @@ public class CitaMedica {
         this.atencion = null;
     }
 
-    // Método 1: atención completa con diagnóstico y tratamiento
     public void registrarAtencion(String diagnostico, String tratamiento) {
         this.atencion = new AtencionMedica(diagnostico, tratamiento);
         this.estado = "ATENDIDA";
     }
 
-    // Tema 2 (Sobrecarga): atención rápida solo con diagnóstico, asignando tratamiento por defecto
     public void registrarAtencion(String diagnostico) {
         registrarAtencion(diagnostico, "Observación y reposo (sin medicación)");
     }
@@ -33,9 +30,9 @@ public class CitaMedica {
         return idCita;
     }
 
-    public void setIdCita(String idCita) {
-        if (idCita == null || idCita.length()==0) {
-            throw new IllegalArgumentException("El ID de la cita es obligatorio.");
+   public void setIdCita(String idCita) {
+        if (idCita == null || !idCita.matches("C-\\d{3}")) {
+            throw new IllegalArgumentException("El formato del ID de la cita debe ser C-XXX (ej. C-103).");
         }
         this.idCita = idCita;
     }

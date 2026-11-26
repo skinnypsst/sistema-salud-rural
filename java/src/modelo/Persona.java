@@ -2,14 +2,15 @@ package modelo;
 
 import excepciones.DniInvalidoException;
 
-// Clase abstracta base: encapsulamiento y validación de datos personales
 public abstract class Persona {
     private String dni;
-    private String nombreCompleto;
+    private String nombres;
+    private String apellidos;
 
-    public Persona(String dni, String nombreCompleto) throws DniInvalidoException {
+    public Persona(String dni, String nombres, String apellidos) throws DniInvalidoException {
         setDni(dni);
-        setNombreCompleto(nombreCompleto);
+        setNombres(nombres);
+        setApellidos(apellidos);
     }
 
     public String getDni() {
@@ -28,15 +29,30 @@ public abstract class Persona {
         return "****" + dni.substring(4);
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public String getNombres() {
+        return nombres;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        if (nombreCompleto == null || nombreCompleto.length() == 0) {
-            throw new IllegalArgumentException("El nombre completo no puede estar vacío.");
+    public void setNombres(String nombres) {
+        if (nombres == null || nombres.length() == 0) {
+            throw new IllegalArgumentException("Los nombres no pueden estar vacíos.");
         }
-        this.nombreCompleto = nombreCompleto;
+        this.nombres = nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        if (apellidos == null || apellidos.length() == 0) {
+            throw new IllegalArgumentException("Los apellidos no pueden estar vacíos.");
+        }
+        this.apellidos = apellidos;
+    }
+
+    public String getNombreCompleto() {
+        return nombres + " " + apellidos;
     }
 
     public abstract String obtenerRol();
