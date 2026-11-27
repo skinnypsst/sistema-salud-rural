@@ -54,7 +54,7 @@ public class SistemaSaludTest {
     }
 
     @Test
-    @DisplayName("4. Verificar filtrado y conteo funcional (filter, map, reduce) de citas atendidas")
+    @DisplayName("4. Verificar filtrado y conteo funcional de citas atendidas")
     void testEstadisticasFuncionalesCitas() {
         GestorCentroSalud gestor = GestorCentroSalud.getInstancia();
         int atendidasAntes = gestor.contarTotalAtendidas();

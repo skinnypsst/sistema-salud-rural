@@ -16,7 +16,7 @@ public class AtencionMedica {
     }
 
     public void setDiagnostico(String diagnostico) {
-        if (diagnostico == null || diagnostico.isEmpty()) {
+        if (diagnostico == null || diagnostico.isBlank()) {
             throw new IllegalArgumentException("El diagnóstico no puede estar vacío.");
         }
         this.diagnosticoCifrado = Base64.getEncoder().encodeToString(diagnostico.trim().getBytes());
