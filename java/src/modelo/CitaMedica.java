@@ -1,6 +1,8 @@
 package modelo;
 
 public class CitaMedica {
+    private static int contadorCitas = 100;
+
     private String idCita;
     private String tipoCita;
     private String estado;
@@ -8,6 +10,7 @@ public class CitaMedica {
     private Medico medico;
     private AtencionMedica atencion;
 
+    // Constructor 1: Con ID manual (mantiene compatibilidad con JUnit y validaciones)
     public CitaMedica(String idCita, String tipoCita, Paciente paciente, Medico medico) {
         setIdCita(idCita);
         setTipoCita(tipoCita);
@@ -15,6 +18,16 @@ public class CitaMedica {
         setMedico(medico);
         this.estado = "PENDIENTE";
         this.atencion = null;
+    }
+
+    // Constructor 2: Genera el ID automáticamente (C-101, C-102, ...)
+    public CitaMedica(String tipoCita, Paciente paciente, Medico medico) {
+        this(generarIdAutomatico(), tipoCita, paciente, medico);
+    }
+
+    private static String generarIdAutomatico() {
+        contadorCitas++;
+        return "C-" + contadorCitas;
     }
 
     public void registrarAtencion(String diagnostico, String tratamiento) {

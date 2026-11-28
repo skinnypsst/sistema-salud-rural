@@ -37,6 +37,11 @@ public class GestorCentroSalud {
         pacientes.add(p);
     }
 
+    public String generarCodigoHistoriaClinica() {
+        int siguiente = pacientes.size() + 1;
+        return String.format("HC-%03d", siguiente);
+    }
+
     public void registrarMedico(Medico m) {
         if (m == null) {
             throw new IllegalArgumentException("El médico no puede ser nulo.");

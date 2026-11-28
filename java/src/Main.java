@@ -17,7 +17,7 @@ public class Main {
             mostrarMenu();
             try {
                 opcion = Integer.parseInt(leer("Seleccione una opción: "));
-                
+
                 switch (opcion) {
                     case 1 -> registrarPaciente();
                     case 2 -> agendarCita();
@@ -42,7 +42,7 @@ public class Main {
     }
 
     private static void mostrarMenu() {
-        System.out.println("\n=== SISTEMA DE SALUD RURAL ===");
+        System.out.println("\n=== SISTEMA DE SALUD | POSTA MEDICA MANUEL ARÉVALO ===");
         System.out.println("1. Registrar paciente");
         System.out.println("2. Agendar cita");
         System.out.println("3. Registrar atención");
@@ -55,23 +55,12 @@ public class Main {
 
     private static void cargarDatosIniciales() {
         try {
-            Paciente p1 = new Paciente("72849102", "Luis", "Gutierrez Rodriguez", "HC-001");
-            Paciente p2 = new Paciente("41928374", "María", "Mendoza Tirado", "HC-002");
             Medico m1 = new Medico("10293847", "Dr. Jorge", "Salazar Castillo", "Medicina General");
             Medico m2 = new Medico("20458912", "Dra. Carmen", "Quispe Vargas", "Pediatría");
 
-            gestor.registrarPaciente(p1);
-            gestor.registrarPaciente(p2);
             gestor.registrarMedico(m1);
             gestor.registrarMedico(m2);
-
-            CitaMedica c1 = CitaFactory.crearCita("C-101", "Consulta Externa", p1, m1);
-            CitaMedica c2 = CitaFactory.crearCita("C-102", "Control", p2, m1);
-            gestor.agendarCita(c1);
-            gestor.agendarCita(c2);
-
-            c1.registrarAtencion("Faringitis aguda", "Paracetamol 500mg cada 8h");
-        } catch (DniInvalidoException | IllegalArgumentException | IllegalStateException e) {
+        } catch (DniInvalidoException | IllegalArgumentException e) {
             System.err.println("Error en datos iniciales: " + e.getMessage());
         }
     }
@@ -119,37 +108,19 @@ public class Main {
             }
         }
 
-        while (true) {
-            try {
-                String hc = leer("Historia Clínica (ej. HC-003): ");
-                Paciente p = new Paciente(dni, nombres, apellidos, hc);
-                gestor.registrarPaciente(p);
-                System.out.println("REGISTRO EXITOSO: Paciente " + p.getNombreCompleto() 
-                        + " (HC: " + p.getNroHistoriaClinica() + " | DNI protegido: " + p.getDniEnmascarado() + ").");
-                break;
-            } catch (DniInvalidoException | IllegalArgumentException e) {
-                System.out.println("[ERROR] " + e.getMessage());
-            }
+        try {
+            String hc = gestor.generarCodigoHistoriaClinica();
+            Paciente p = new Paciente(dni, nombres, apellidos, hc);
+            gestor.registrarPaciente(p);
+            System.out.println("REGISTRO EXITOSO: Paciente " + p.getNombreCompleto()
+                    + " (HC asignada: " + p.getNroHistoriaClinica()
+                    + " | DNI protegido: " + p.getDniEnmascarado() + ").");
+        } catch (DniInvalidoException | IllegalArgumentException e) {
+            System.out.println("[ERROR] " + e.getMessage());
         }
     }
 
     private static void agendarCita() {
-        String id;
-        while (true) {
-            try {
-                id = leer("ID de cita (ej. C-103): ");
-                if (!id.matches("C-\\d{3}")) {
-                    throw new IllegalArgumentException("El formato del ID de la cita debe ser C-XXX (ej. C-103).");
-                }
-                if (gestor.buscarCitaPorId(id) != null) {
-                    throw new IllegalArgumentException("Ya existe una cita agendada con el ID " + id + ".");
-                }
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println("[ERROR] " + e.getMessage());
-            }
-        }
-
         String tipo;
         while (true) {
             try {
@@ -198,10 +169,11 @@ public class Main {
         }
 
         try {
-            gestor.agendarCita(CitaFactory.crearCita(id, tipo, p, m));
-            System.out.println("REGISTRO EXITOSO: Cita " + id + " (" + tipo + ") agendada para el paciente " 
-                    + p.getNombreCompleto() + " (" + p.getDniEnmascarado() + ") con el/la " 
-                    + m.getNombreCompleto() + " (" + m.getEspecialidad() + ").");
+            CitaMedica nuevaCita = CitaFactory.crearCita(tipo, p, m);
+            gestor.agendarCita(nuevaCita);
+            System.out.println("REGISTRO EXITOSO: Cita " + nuevaCita.getIdCita() + " (" + tipo
+                    + ") agendada para el paciente " + p.getNombreCompleto() + " (" + p.getDniEnmascarado()
+                    + ") con el/la " + m.getNombreCompleto() + " (" + m.getEspecialidad() + ").");
         } catch (IllegalArgumentException e) {
             System.out.println("[ERROR] " + e.getMessage());
         }
@@ -210,7 +182,7 @@ public class Main {
     private static void registrarAtencion() {
         CitaMedica cita;
         while (true) {
-            String id = leer("ID de la cita (ej. C-102): ");
+            String id = leer("ID de la cita (ej. C-101): ");
             cita = gestor.buscarCitaPorId(id);
             if (cita == null) {
                 System.out.println("[ERROR] Cita no encontrada. Intente nuevamente.");
@@ -299,7 +271,7 @@ public class Main {
                 String especialidad = leer("Especialidad (ej. Cardiología): ");
                 Medico m = new Medico(dni, nombres, apellidos, especialidad);
                 gestor.registrarMedico(m);
-                System.out.println("REGISTRO EXITOSO: " + m.getNombreCompleto() 
+                System.out.println("REGISTRO EXITOSO: " + m.getNombreCompleto()
                         + " (" + m.obtenerRol() + " | DNI protegido: " + m.getDniEnmascarado() + ") incorporado al plantel médico.");
                 break;
             } catch (DniInvalidoException | IllegalArgumentException e) {
