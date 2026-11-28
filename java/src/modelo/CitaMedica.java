@@ -10,7 +10,6 @@ public class CitaMedica {
     private Medico medico;
     private AtencionMedica atencion;
 
-    // Constructor 1: Con ID manual (mantiene compatibilidad con JUnit y validaciones)
     public CitaMedica(String idCita, String tipoCita, Paciente paciente, Medico medico) {
         setIdCita(idCita);
         setTipoCita(tipoCita);

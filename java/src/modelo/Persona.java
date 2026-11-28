@@ -24,7 +24,6 @@ public abstract class Persona {
         this.dni = dni;
     }
 
-    // Ley N.° 29733: nunca se expone el DNI completo en pantalla ni reportes
     public String getDniEnmascarado() {
         return "****" + dni.substring(4);
     }

@@ -20,19 +20,16 @@ public class VentanaSistemaSalud extends JFrame {
 
         cargarDatosIniciales();
 
-        // Panel principal con márgenes para que no quede pegado a los bordes
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(9, 1, 10, 10));
         panel.setBackground(new Color(235, 242, 248));
         panel.setBorder(new EmptyBorder(20, 40, 20, 40));
 
-        // Título estilizado
         JLabel titulo = new JLabel("SISTEMA DE SALUD | POSTA MEDICA MANUEL ARÉVALO");
         titulo.setHorizontalAlignment(JLabel.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 16));
         titulo.setForeground(new Color(25, 75, 120));
 
-        // Botones del menú
         JButton btnPaciente = new JButton("Registrar paciente");
         JButton btnCita = new JButton("Agendar cita");
         JButton btnAtencion = new JButton("Registrar atención");
@@ -42,7 +39,6 @@ public class VentanaSistemaSalud extends JFrame {
         JButton btnEstadisticas = new JButton("Filtrar citas y total atendidas");
         JButton btnSalir = new JButton("Salir");
 
-        // Colores y fuente para los botones
         Color azul = new Color(52, 130, 190);
         Color rojo = new Color(200, 65, 65);
 
@@ -67,7 +63,6 @@ public class VentanaSistemaSalud extends JFrame {
 
         add(panel);
 
-        // Cada listener llama al método de su opción.
         btnPaciente.addActionListener(e -> registrarPaciente());
         btnCita.addActionListener(e -> agendarCita());
         btnAtencion.addActionListener(e -> registrarAtencion());
@@ -78,7 +73,6 @@ public class VentanaSistemaSalud extends JFrame {
         btnSalir.addActionListener(e -> System.exit(0));
     }
 
-    // Método sencillo para aplicar color y fuente a cada botón.
     private void darEstiloBoton(JButton boton, Color colorFondo) {
         boton.setBackground(colorFondo);
         boton.setForeground(Color.WHITE);
@@ -86,7 +80,6 @@ public class VentanaSistemaSalud extends JFrame {
         boton.setFocusPainted(false);
     }
 
-    // Solicita un dato obligatorio.
     private String pedirDato(String mensaje) {
         while (true) {
             String dato = JOptionPane.showInputDialog(this, mensaje);
