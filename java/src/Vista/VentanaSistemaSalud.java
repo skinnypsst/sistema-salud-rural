@@ -103,7 +103,6 @@ public class VentanaSistemaSalud extends JFrame {
         }
     }
 
-    // Solicita un DNI y comprueba que tenga exactamente 8 números.
     private String pedirDni(String mensaje) {
         while (true) {
             String dni = JOptionPane.showInputDialog(this, mensaje);
@@ -126,7 +125,6 @@ public class VentanaSistemaSalud extends JFrame {
         }
     }
 
-    // Lista los médicos registrados en el sistema para facilitar elegir el DNI.
     private String listarMedicosDisponibles() {
         StringBuilder sb = new StringBuilder();
         boolean hayMedicos = false;
@@ -148,7 +146,6 @@ public class VentanaSistemaSalud extends JFrame {
         return sb.toString();
     }
 
-    // OPCIÓN 1: REGISTRAR PACIENTE
     private void registrarPaciente() {
         try {
             String dni = pedirDni("Ingrese el DNI del paciente (8 dígitos):");
@@ -165,7 +162,6 @@ public class VentanaSistemaSalud extends JFrame {
             String apellidos = pedirDato("Ingrese los apellidos:");
             if (apellidos == null) return;
 
-            // Se genera automáticamente (ej. HC-001, HC-002...)
             String historia = gestor.generarCodigoHistoriaClinica();
 
             Paciente paciente = new Paciente(dni, nombres, apellidos, historia);
@@ -183,7 +179,6 @@ public class VentanaSistemaSalud extends JFrame {
         }
     }
 
-    // OPCIÓN 2: AGENDAR CITA
     private void agendarCita() {
         try {
             String tipo = pedirDato("Ingrese el tipo de cita:");
@@ -228,7 +223,6 @@ public class VentanaSistemaSalud extends JFrame {
         }
     }
 
-    // OPCIÓN 3: REGISTRAR ATENCIÓN
     private void registrarAtencion() {
         String id = pedirDato("Ingrese el ID de la cita (ej. C-101):");
         if (id == null) return;
@@ -276,7 +270,6 @@ public class VentanaSistemaSalud extends JFrame {
         }
     }
 
-    // OPCIÓN 4: REGISTRAR MÉDICO
     private void registrarMedico() {
         try {
             String dni = pedirDni("Ingrese el DNI del médico (8 dígitos):");
@@ -312,7 +305,6 @@ public class VentanaSistemaSalud extends JFrame {
         }
     }
 
-    // OPCIÓN 5: LISTAR ROLES
     private void listarRoles() {
         String texto = "=== PERSONAS REGISTRADAS ===\n\n";
 
@@ -329,7 +321,6 @@ public class VentanaSistemaSalud extends JFrame {
         mostrarResultado(texto);
     }
 
-    // OPCIÓN 6: REPORTE ANONIMIZADO
     private void mostrarReporteAnonimizado() {
         String texto = "=== REPORTE ANONIMIZADO DE CITAS ===\n\n";
 
@@ -344,7 +335,6 @@ public class VentanaSistemaSalud extends JFrame {
         mostrarResultado(texto);
     }
 
-    // OPCIÓN 7: FILTRAR CITAS Y TOTAL ATENDIDAS
     private void mostrarEstadisticas() {
         String estado = pedirDato("Estado a filtrar (PENDIENTE / ATENDIDA):");
         if (estado == null) return;
@@ -369,13 +359,11 @@ public class VentanaSistemaSalud extends JFrame {
         mostrarResultado(texto);
     }
 
-    // Muestra mensajes de error.
     private void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje,
                 "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    // Muestra resultados en una ventana con área de texto.
     private void mostrarResultado(String texto) {
         JTextArea area = new JTextArea(texto, 15, 45);
         area.setEditable(false);
@@ -389,7 +377,6 @@ public class VentanaSistemaSalud extends JFrame {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // Carga los médicos iniciales sin pacientes ni citas precargadas.
     private void cargarDatosIniciales() {
         try {
             if (gestor.buscarMedicoPorDni("10293847") == null) {
